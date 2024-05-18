@@ -16,7 +16,7 @@ namespace EMS.Web.ServiceCollection
 
             services.AddTransient<IAuthenticateUserRepository, AuthenticateUserRepository>();
 
-            
+            services.AddTransient<IOrgDivisionRepository, OrgDivisionRepository>();
         }
 
     }

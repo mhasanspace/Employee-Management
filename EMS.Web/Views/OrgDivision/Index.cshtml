@@ -1,0 +1,32 @@
+﻿@model IEnumerable<EMS.Domain.ViewModels.OrgDivisionView>
+@{
+    ViewData["Title"] = "Organization Divisions";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h1>Organization Divisions</h1>
+
+<form method="get" asp-controller="OrgDivision" asp-action="Index">
+    <input type="text" name="searchTerm" placeholder="Search..." value="@ViewContext.HttpContext.Request.Query["searchTerm"]" />
+    <button type="submit">Search</button>
+</form>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>Name</th>
+            <th>Create By</th>
+            <th>Create Date</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var division in Model)
+        {
+            <tr>
+                <td>@division.Name</td>
+                <td>@division.CreateByName</td>
+                <td>@division.CreateDate</td>
+            </tr>
+        }
+    </tbody>
+</table>

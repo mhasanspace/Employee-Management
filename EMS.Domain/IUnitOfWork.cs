@@ -10,6 +10,7 @@ namespace EMS.Domain
     public interface IUnitOfWork : IDisposable
     {
         IAuthenticateUserRepository AuthenticateUserRepository { get; }
+        IOrgDivisionRepository OrgDivisionRepository { get; }
 
         Task<int> SaveChangesAsync();
 

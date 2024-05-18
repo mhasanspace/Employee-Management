@@ -16,13 +16,16 @@ namespace EMS.Persistence
         
         public UnitOfWork(EmsDbContext context
             , IAuthenticateUserRepository authenticateUserRepository
-
+            , IOrgDivisionRepository orgDivisionRepository
             )
         {
             this._dbContext = context;
             AuthenticateUserRepository = authenticateUserRepository;
+            OrgDivisionRepository = orgDivisionRepository;
         }
         public IAuthenticateUserRepository AuthenticateUserRepository { get; set; }
+
+        public IOrgDivisionRepository OrgDivisionRepository { get; set; }
 
         public int SaveChanges()
         {

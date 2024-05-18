@@ -11,6 +11,7 @@ namespace EMS.Web.ServiceCollection
             services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
 
             services.AddTransient<AuthenticateUserService>();
+            services.AddTransient<OrgDivisionService>();
         }
 
     }
