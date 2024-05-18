@@ -1,4 +1,5 @@
-﻿using EMS.Web.Models;
+﻿using EMS.Utility.Helper;
+using EMS.Web.Models;
 using Microsoft.AspNetCore.Mvc;
 using System.Diagnostics;
 
@@ -15,6 +16,14 @@ namespace EMS.Web.Controllers
 
         public IActionResult Index()
         {
+            var appUserLogin = SessionHelper.GetAppUserLogin(HttpContext.Session);
+            if (appUserLogin == null)
+            {
+                return RedirectToAction("Login", "AuthenticateUser");
+            }
+
+            ViewBag.UserFullName = appUserLogin.UserFullName;
+            ViewBag.DesignationName = appUserLogin.DesignationName;
             return View();
         }
 
