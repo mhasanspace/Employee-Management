@@ -1,0 +1,21 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+	<PropertyGroup>
+		<TargetFramework>net6.0</TargetFramework>
+		<ImplicitUsings>enable</ImplicitUsings>
+		<Nullable>enable</Nullable>
+	</PropertyGroup>
+
+	<ItemGroup>
+		<PackageReference Include="Microsoft.AspNet.Cors" Version="5.3.0" />
+		<PackageReference Include="Microsoft.AspNetCore.Authentication.Cookies" Version="2.2.0" />
+		<PackageReference Include="Microsoft.AspNetCore.Authentication.WsFederation" Version="6.0.30" />
+	</ItemGroup>
+
+
+	<ItemGroup>
+		<ProjectReference Include="..\EMS.Business\EMS.Business.csproj" />
+		<ProjectReference Include="..\EMS.Domain\EMS.Domain.csproj" />
+	</ItemGroup>
+
+</Project>
