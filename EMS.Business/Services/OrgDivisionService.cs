@@ -41,6 +41,12 @@ namespace EMS.Business.Services
 
         }
 
+        public OrgDivisionView GetOrgDivisionById(int orgDivId)
+        {
+            return UnitOfWorkSB.OrgDivisionRepository.GetOrgDivisionById(orgDivId);
+        }
+
+
 
         public DotNetRunner AddOrgDivision(OrgDivisionDto orgDivisionDto, AppUserLoginInfo appUserLoginInfo)
         {
@@ -77,6 +83,75 @@ namespace EMS.Business.Services
         }
 
 
+        public DotNetRunner UpdateOrgDivision(OrgDivisionDto orgDivisionDto, AppUserLoginInfo appUserLoginInfo)
+        {
+            DotNetRunner dotNetRunner = new DotNetRunner();
+
+            try
+            {
+                var existingOrgDivision = UnitOfWorkSB.OrgDivisionRepository.Where(od => od.Id == orgDivisionDto.Id).FirstOrDefault();
+                if (existingOrgDivision == null)
+                {
+                    dotNetRunner.OperationTypeInfoId = (int)EnumCollection.OperationTypeInfoEnum.UpdateOperationError;
+                    dotNetRunner.Message = "Data not found or you don't have permission to edit.";
+                    return dotNetRunner;
+                }
+
+                existingOrgDivision.Name = orgDivisionDto.Name;
+                existingOrgDivision.LastModifyBy = appUserLoginInfo.UserId;
+                existingOrgDivision.LastModifyDate = DateTime.Now;
+
+                UnitOfWorkSB.OrgDivisionRepository.Update(existingOrgDivision);
+                UnitOfWorkSB.SaveChanges();
+                dotNetRunner.Message = OperationMessage.UpdateSuccessMsg;
+                dotNetRunner.OperationTypeInfoId = (int)OperationTypeInfoEnum.Updated;
+            }
+            catch (Exception ex)
+            {
+                dotNetRunner.ErrorMessage = ex.Message;
+            }
+
+            return dotNetRunner;
+        }
+
+
+        public DotNetRunner DeleteOrgDivision(int orgDivId)
+        {
+            DotNetRunner dotNetRunner = new DotNetRunner();
+
+            OrgDivision orgDivision = UnitOfWorkSB.OrgDivisionRepository.FindOne(s => s.Id == orgDivId);
+            if (orgDivision == null)
+            {
+                dotNetRunner.OperationTypeInfoId = (int)OperationTypeInfoEnum.DeleteOperationError;
+                dotNetRunner.Message = OperationMessage.InvalidOperationMsg;
+                dotNetRunner.ErrorMessage = OperationMessageError.DataNotFoundForDeleteMsg;
+                return dotNetRunner;
+            }
+
+            try
+            {
+                UnitOfWorkSB.OrgDivisionRepository.Remove(orgDivision);
+                int result = UnitOfWorkSB.SaveChanges();
+                if (result == 1)
+                {
+                    dotNetRunner.OperationTypeInfoId = (int)OperationTypeInfoEnum.Deleted;
+                    dotNetRunner.Message = OperationMessage.DeleteSuccessMsg;
+                }
+                else
+                {
+                    dotNetRunner.OperationTypeInfoId = (int)OperationTypeInfoEnum.DeleteOperationError;
+                    dotNetRunner.Message = OperationMessage.DeleteFailMsg;
+                }
+            }
+            catch (Exception ex)
+            {
+                dotNetRunner.OperationTypeInfoId = (int)OperationTypeInfoEnum.DeleteOperationError;
+                dotNetRunner.Message = OperationMessageError.ExceptionDeleteMsg;
+                dotNetRunner.ErrorMessage = ex.Message;
+            }
+
+            return dotNetRunner;
+        }
 
 
 

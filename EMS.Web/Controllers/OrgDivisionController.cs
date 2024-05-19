@@ -1,4 +1,6 @@
-﻿using EMS.Business.Services;
+﻿using DocumentFormat.OpenXml.Office2010.Excel;
+using EMS.Business.Services;
+using EMS.Common.CommonHelper;
 using EMS.Common.EnumUtility;
 using EMS.Domain.DtoModels;
 using EMS.Domain.ViewModels;
@@ -71,6 +73,74 @@ namespace EMS.Web.Controllers
             }
             return View(orgDivisionDto);
         }
+
+
+
+        [HttpGet("updateOrgDivision")]
+        public IActionResult UpdateOrgDivision(int id)
+        {
+            var division = _orgDivisionService.GetOrgDivisionById(id);
+            if (division == null)
+            {
+                return NotFound();
+            }
+            return View(division);
+        }
+
+
+        [HttpPost("updateOrgDivision")]
+        public IActionResult UpdateOrgDivision(OrgDivisionDto orgDivisionDto)
+        {
+            if (ModelState.IsValid)
+            {
+                var appUserLogin = SessionHelper.GetAppUserLogin(HttpContext.Session);
+                var result = _orgDivisionService.UpdateOrgDivision(orgDivisionDto, appUserLogin);
+
+                if (result.OperationTypeInfoId == (int)EnumCollection.OperationTypeInfoEnum.UpdateOperationError)
+                {
+                    TempData["ErrorMessage"] = result.Message;
+                    return View(orgDivisionDto);
+                }
+                else if (result.OperationTypeInfoId == (int)OperationTypeInfoEnum.Updated)
+                {
+                    TempData["SuccessMessage"] = result.Message;
+                    return RedirectToAction("Index");
+                }
+                else
+                {
+                    TempData["ErrorMessage"] = "An error occurred while processing your request.";
+                }
+            }
+            else
+            {
+                TempData["ErrorMessage"] = "Invalid input data.";
+            }
+            return View(orgDivisionDto);
+        }
+
+
+        [HttpPost("deleteOrgDivision")]
+        public IActionResult DeleteOrgDivision(int orgDivId)
+        {
+            // Call the service method
+            DotNetRunner result = _orgDivisionService.DeleteOrgDivision(orgDivId);
+
+            // Check the result
+            if (result.OperationTypeInfoId == (int)OperationTypeInfoEnum.Deleted)
+            {
+                // Handle success case
+                TempData["SuccessMessage"] = result.Message;
+                return RedirectToAction("Index");
+            }
+            else
+            {
+                // Handle error case
+                TempData["ErrorMessage"] = result.ErrorMessage ?? "An error occurred while processing your request.";
+                return RedirectToAction("Index"); // or return some other IActionResult based on your application's needs
+            }
+        }
+
+
 
 
     }

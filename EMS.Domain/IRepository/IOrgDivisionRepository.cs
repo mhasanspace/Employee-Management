@@ -10,7 +10,12 @@ namespace EMS.Domain.IRepository
 {
     public interface IOrgDivisionRepository : IRepositoryBase<OrgDivision>
     {
-        void Add(OrgDivision orgDivision);
+       
         List<OrgDivisionView> GetOrgDivisionList(string? searchTerm);
+        OrgDivisionView GetOrgDivisionById(int orgDivId);
+
+        void Add(OrgDivision orgDivision);
+
+
     }
 }
