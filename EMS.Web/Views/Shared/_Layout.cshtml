@@ -1,4 +1,5 @@
-﻿<!DOCTYPE html>
+﻿@using EMS.Utility.Helper;
+<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="utf-8" />
@@ -18,6 +19,11 @@
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 </head>
 <body>
+    @{
+        var appUserLogin = SessionHelper.GetAppUserLogin(Context.Session);
+        var userFullName = appUserLogin?.UserFullName;
+        var designationName = appUserLogin?.DesignationName;
+    }
     <div class="main-wrapper">
         <div class="header">
             <div class="header-left">
@@ -38,13 +44,13 @@
                 <li class="nav-item dropdown has-arrow">
                     <a href="#" class="dropdown-toggle nav-link" data-toggle="dropdown">
                         @*<span class="user-img"><img class="rounded-circle" src="assets/img/profiles/avatar-01.jpg" width="31" alt="Ryan Taylor"></span>*@
-                        <span class="user-img"><i class="fa fa-user" aria-hidden="true" width="75" alt="Ryan Taylor"></i> @ViewBag.UserFullName</span>
+                        <span class="user-img"><i class="fa fa-user" aria-hidden="true" width="75" alt="Ryan Taylor"></i> @userFullName</span>
                     </a>
                     <div class="dropdown-menu">
                         <div class="user-header">
                             <div class="user-text">
-                                <h6>@ViewBag.UserFullName</h6>
-                                <p class="text-muted mb-0">@ViewBag.DesignationName</p>
+                                <h6>@userFullName</h6>
+                                <p class="text-muted mb-0">@designationName</p>
                             </div>
                         </div>
                         <a class="dropdown-item" href="profile.html">My Profile</a>
@@ -62,10 +68,10 @@
                         <li class="menu-title">
                             <span>Main Menu</span>
                         </li>
-                        <li class="submenu active">
+                        <li class="submenu">
                             <a href="#"><i class="fas fa-user-graduate"></i> <span> Dashboard</span> <span class="menu-arrow"></span></a>
                             <ul>
-                                <li><a href="index.html" class="active">Admin Dashboard</a></li>
+                                <li><a asp-controller="OrgDivision" asp-action="Index">Org Division List</a></li>
                                 <li><a href="teacher-dashboard.html">Teacher Dashboard</a></li>
                                 <li><a href="student-dashboard.html">Student Dashboard</a></li>
                             </ul>
@@ -228,7 +234,7 @@
     <script src="~/assets/plugins/bootstrap/js/bootstrap.min.js"></script>
     <script src="~/assets/plugins/slimscroll/jquery.slimscroll.min.js"></script>
     <script src="~/assets/js/script.js"></script>
-   @* <script src="~/js/toastrmessage.js"></script>*@
+    @* <script src="~/js/toastrmessage.js"></script>*@
 
     <script type="text/javascript">
         $(document).ready(function () {
@@ -240,7 +246,7 @@
         {
             <text>toastr.error('@TempData["ErrorMessage"]'); </text>
         }
-                        });
+                                });
     </script>
 
     @RenderSection("Scripts", required: false)

@@ -22,8 +22,8 @@ namespace EMS.Web.Controllers
                 return RedirectToAction("Login", "AuthenticateUser");
             }
 
-            ViewBag.UserFullName = appUserLogin.UserFullName;
-            ViewBag.DesignationName = appUserLogin.DesignationName;
+            //ViewBag.UserFullName = appUserLogin.UserFullName;
+            //ViewBag.DesignationName = appUserLogin.DesignationName;
             return View();
         }
 
