@@ -11,6 +11,7 @@ namespace EMS.Domain
     {
         IAuthenticateUserRepository AuthenticateUserRepository { get; }
         IOrgDivisionRepository OrgDivisionRepository { get; }
+        IDepartmentRepository DepartmentRepository { get; }
 
         Task<int> SaveChangesAsync();
 

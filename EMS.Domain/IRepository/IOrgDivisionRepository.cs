@@ -12,10 +12,9 @@ namespace EMS.Domain.IRepository
     {
        
         List<OrgDivisionView> GetOrgDivisionList(string? searchTerm);
+        List<OrgDivisionView> GetAllOrgDivision();
         OrgDivisionView GetOrgDivisionById(int orgDivId);
 
         void Add(OrgDivision orgDivision);
-
-
     }
 }

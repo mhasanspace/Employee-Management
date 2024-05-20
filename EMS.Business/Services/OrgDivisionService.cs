@@ -41,6 +41,23 @@ namespace EMS.Business.Services
 
         }
 
+
+        public List<OrgDivisionView> GetAllOrgDivision()
+        {
+            try
+            {
+                List<OrgDivisionView> data = UnitOfWorkSB.OrgDivisionRepository.GetAllOrgDivision();
+                return data;
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError($"OrgDivisionService->GetAllOrgDivision. Exception Message : {ex.Message}");
+                _logger.LogTrace(ex, ex.Message);
+                throw;
+            }
+
+        }
+
         public OrgDivisionView GetOrgDivisionById(int orgDivId)
         {
             return UnitOfWorkSB.OrgDivisionRepository.GetOrgDivisionById(orgDivId);

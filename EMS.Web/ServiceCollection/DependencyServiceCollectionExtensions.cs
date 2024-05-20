@@ -12,6 +12,7 @@ namespace EMS.Web.ServiceCollection
 
             services.AddTransient<AuthenticateUserService>();
             services.AddTransient<OrgDivisionService>();
+            services.AddTransient<DepartmentService>();
         }
 
     }

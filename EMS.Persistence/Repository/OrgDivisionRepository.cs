@@ -53,6 +53,42 @@ namespace EMS.Persistence.Repository
         }
 
 
+
+
+        public List<OrgDivisionView> GetAllOrgDivision()
+        {
+            List<OrgDivisionView> orgDivisionViews = new List<OrgDivisionView>();
+
+            try
+            {
+                var query = from ord in context.OrgDivisions
+                            join auc in context.Users on ord.CreateBy equals auc.Id
+                            join aum in context.Users on ord.LastModifyBy equals aum.Id into lastModifyJoin
+                            from aum in lastModifyJoin.DefaultIfEmpty()
+                            select new OrgDivisionView
+                            {
+                                Id = ord.Id,
+                                Name = ord.Name,
+                                CreateDate = ord.CreateDate.HasValue ? ord.CreateDate.Value.ToString("dd-MMM-yyyy") : string.Empty,
+                                CreateByName = auc != null ? $"{auc.FirstName} {auc.LastName}" : "",
+                                LastModifyDate = ord.LastModifyDate.HasValue ? ord.LastModifyDate.Value.ToString("dd-MMM-yyyy") : string.Empty,
+                                LastModifyByName = aum != null ? $"{aum.FirstName} {aum.LastName}" : ""
+                            };
+
+                query = query.OrderByDescending(od => od.Id);
+
+                orgDivisionViews = query.ToList();
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"An error occurred: {ex.Message}");
+            }
+
+            return orgDivisionViews ?? new List<OrgDivisionView>();
+        }
+
+
+
         public OrgDivisionView GetOrgDivisionById(int orgDivId)
         {
             OrgDivisionView orgDivisionView = new OrgDivisionView();
@@ -86,20 +122,10 @@ namespace EMS.Persistence.Repository
 
 
 
-
-
-
-
-
-
         void IOrgDivisionRepository.Add(OrgDivision orgDivision)
         {
             _context.Set<OrgDivision>().Add(orgDivision);
         }
-
-
-
-
 
 
 
