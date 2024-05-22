@@ -30,7 +30,12 @@
                 <td>@division.CreateDate</td>
                 <td>
                     <a asp-controller="OrgDivision" asp-action="UpdateOrgDivision" asp-route-id="@division.Id" class="btn btn-primary">Update</a>
-                    <button type="button" class="btn btn-danger deleteButton" data-id="@division.Id" data-delete-url="@Url.Action("DeleteOrgDivision", "OrgDivision")">Delete</button>
+
+                     
+                    @*<button type="button" class="btn btn-danger deleteButton" data-value="@division.Id" data-param-name="id" data-delete-url="@Url.Action("DeleteOrgDivision", "OrgDivision")">Delete</button>*@
+
+                    <button type="button" class="btn btn-danger deleteButton" data-value="@division.Id" data-delete-url="@Url.Action("DeleteOrgDivision", "OrgDivision")">Delete</button>
+                    
                 </td>
             </tr>
         }
@@ -39,7 +44,7 @@
 
 @section Scripts {
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-    <script src="~/js/deleteConfirmation.js"></script>
+    <script src="~/js/deleteconfirmation.js"></script>
 }
 
 

@@ -1,8 +1,9 @@
 ﻿document.addEventListener('DOMContentLoaded', function () {
     document.querySelectorAll('.deleteButton').forEach(button => {
         button.addEventListener('click', function () {
-            const divisionId = this.getAttribute('data-id');
+            const value = this.getAttribute('data-value'); // Get the value dynamically (can be string or int)
             const deleteUrl = this.getAttribute('data-delete-url'); // Get the delete URL dynamically
+            const paramName = this.getAttribute('data-param-name') || 'id'; // Get the parameter name dynamically, default to 'id'
 
             Swal.fire({
                 title: 'Are you sure?',
@@ -19,11 +20,11 @@
                     form.method = 'post';
                     form.action = deleteUrl; // Set the action URL dynamically
 
-                    // Create input element for orgDivId
+                    // Create input element for the parameter
                     const input = document.createElement('input');
                     input.type = 'hidden';
-                    input.name = 'orgDivId';
-                    input.value = divisionId;
+                    input.name = paramName; // Set the parameter name dynamically
+                    input.value = value; // Set the value dynamically (can be string or int)
 
                     // Append input element to form
                     form.appendChild(input);

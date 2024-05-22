@@ -34,7 +34,12 @@
                 <td>@department.CreateDate</td>
                 <td>
                     <a asp-controller="Department" asp-action="UpdateDepartment" asp-route-id="@department.Id" class="btn btn-primary">Update</a>
-                    <button type="button" class="btn btn-danger deleteButton" data-id="@department.Id" data-delete-url="@Url.Action("DeleteDepartment", "Department")">Delete</button>
+
+                    @*<button type="button" class="btn btn-danger deleteButton" data-value="@department.Id" data-param-name="deptId" data-delete-url="@Url.Action("DeleteDepartment", "Department")">Delete</button>*@
+
+                    <button type="button" class="btn btn-danger deleteButton" data-value="@department.Id" data-delete-url="@Url.Action("DeleteDepartment", "Department")">Delete</button>
+
+
                 </td>
             </tr>
         }
@@ -43,5 +48,6 @@
 
 @section Scripts {
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-    <script src="~/js/deleteConfirmation.js"></script>
-    }
+    <script src="~/js/deleteconfirmation.js"></script>
+}
+

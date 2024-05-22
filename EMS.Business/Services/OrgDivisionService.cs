@@ -145,6 +145,16 @@ namespace EMS.Business.Services
                 return dotNetRunner;
             }
 
+            // Check if the department is referenced in other tables
+            if (IsDepartmentReferenced(orgDivId))
+            {
+                dotNetRunner.OperationTypeInfoId = (int)OperationTypeInfoEnum.DeleteOperationError;
+                dotNetRunner.Message = "Cannot delete division as it is referenced in other records.";
+                dotNetRunner.ErrorMessage = "This data is referenced in other tables.";
+                return dotNetRunner;
+            }
+
+
             try
             {
                 UnitOfWorkSB.OrgDivisionRepository.Remove(orgDivision);
@@ -170,6 +180,12 @@ namespace EMS.Business.Services
             return dotNetRunner;
         }
 
+
+        //This method checks if the department is referenced in other tables.
+        private bool IsDepartmentReferenced(int orgDivId)
+        {
+            return UnitOfWorkSB.DepartmentRepository.Exists(e => e.OrgDivisionId == orgDivId);
+        }
 
 
 

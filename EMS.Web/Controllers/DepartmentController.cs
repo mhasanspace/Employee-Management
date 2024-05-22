@@ -1,4 +1,5 @@
 ﻿using EMS.Business.Services;
+using EMS.Common.CommonHelper;
 using EMS.Common.EnumUtility;
 using EMS.Domain.DtoModels;
 using EMS.Domain.Models;
@@ -103,6 +104,30 @@ namespace EMS.Web.Controllers
             {
                 TempData["ErrorMessage"] = $"An error occurred while processing your request: {ex.Message}";
                 return View(departmentDto);
+            }
+        }
+
+
+
+
+        [HttpPost("DeleteDepartment")]
+        public IActionResult DeleteDepartment(int id)
+        {
+            // Call the service method
+            DotNetRunner result = _departmentService.DeleteDepartment(id);
+
+            // Check the result
+            if (result.OperationTypeInfoId == (int)OperationTypeInfoEnum.Deleted)
+            {
+                // Handle success case
+                TempData["SuccessMessage"] = result.Message;
+                return RedirectToAction("Index");
+            }
+            else
+            {
+                // Handle error case
+                TempData["ErrorMessage"] = result.ErrorMessage ?? "An error occurred while processing your request.";
+                return RedirectToAction("Index"); // or return some other IActionResult based on your application's needs
             }
         }
 

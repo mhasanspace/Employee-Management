@@ -119,11 +119,17 @@ namespace EMS.Web.Controllers
         }
 
 
+        /// <summary>
+        /// Delete Function (Because of JavaScript Functionalaty must be used paramitter as (int id)
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
+
         [HttpPost("DeleteOrgDivision")]
-        public IActionResult DeleteOrgDivision(int orgDivId)
+        public IActionResult DeleteOrgDivision(int id)
         {
             // Call the service method
-            DotNetRunner result = _orgDivisionService.DeleteOrgDivision(orgDivId);
+            DotNetRunner result = _orgDivisionService.DeleteOrgDivision(id);
 
             // Check the result
             if (result.OperationTypeInfoId == (int)OperationTypeInfoEnum.Deleted)

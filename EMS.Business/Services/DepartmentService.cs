@@ -102,5 +102,62 @@ namespace EMS.Business.Services
 
 
 
+
+        public DotNetRunner DeleteDepartment(int deptId)
+        {
+            DotNetRunner dotNetRunner = new DotNetRunner();
+
+            Department department = UnitOfWorkSB.DepartmentRepository.FindOne(d => d.Id == deptId);
+            if (department == null)
+            {
+                dotNetRunner.OperationTypeInfoId = (int)OperationTypeInfoEnum.DeleteOperationError;
+                dotNetRunner.Message = OperationMessage.InvalidOperationMsg;
+                dotNetRunner.ErrorMessage = OperationMessageError.DataNotFoundForDeleteMsg;
+                return dotNetRunner;
+            }
+
+            // Check if the department is referenced in other tables
+            //if (IsDepartmentReferenced(deptId))
+            //{
+            //    dotNetRunner.OperationTypeInfoId = (int)OperationTypeInfoEnum.DeleteOperationError;
+            //    dotNetRunner.Message = "Cannot delete department as it is referenced in other records.";
+            //    dotNetRunner.ErrorMessage = "Department is referenced in other tables.";
+            //    return dotNetRunner;
+            //}
+
+            try
+            {
+                UnitOfWorkSB.DepartmentRepository.Remove(department);
+                int result = UnitOfWorkSB.SaveChanges();
+                if (result == 1)
+                {
+                    dotNetRunner.OperationTypeInfoId = (int)OperationTypeInfoEnum.Deleted;
+                    dotNetRunner.Message = OperationMessage.DeleteSuccessMsg;
+                }
+                else
+                {
+                    dotNetRunner.OperationTypeInfoId = (int)OperationTypeInfoEnum.DeleteOperationError;
+                    dotNetRunner.Message = OperationMessage.DeleteFailMsg;
+                }
+            }
+            catch (Exception ex)
+            {
+                dotNetRunner.OperationTypeInfoId = (int)OperationTypeInfoEnum.DeleteOperationError;
+                dotNetRunner.Message = OperationMessageError.ExceptionDeleteMsg;
+                dotNetRunner.ErrorMessage = ex.Message;
+            }
+
+            return dotNetRunner;
+        }
+
+        // This method checks if the department is referenced in other tables.
+        //private bool IsDepartmentReferenced(int deptId)
+        //{
+        //    return UnitOfWorkSB.AuthenticateUserRepository.Exists(e => e.DepartmentId == deptId);
+        //}
+
+
+
+
     }
 }
