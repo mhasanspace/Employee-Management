@@ -4,6 +4,7 @@ using EMS.Domain;
 using EMS.Domain.DtoModels;
 using EMS.Domain.Models;
 using EMS.Domain.OtherModels;
+using EMS.Domain.ViewModels;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Logging;
 using System;
@@ -25,6 +26,42 @@ namespace EMS.Business.Services
             _configuration = configuration;
         }
 
+
+
+        public List<DepartmentView> GetAllDepartment()
+        {
+            try
+            {
+                List<DepartmentView> data = UnitOfWorkSB.DepartmentRepository.GetAllDepartment();
+
+                return data;
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError($"DepartmentService->GetAllDepartment. Exception Message : {ex.Message}");
+                _logger.LogTrace(ex, ex.Message);
+                throw;
+            }
+
+        }
+
+
+        public List<DepartmentView> GetDepartmentListByPage(string? searchTerm)
+        {
+            try
+            {
+                List<DepartmentView> data = UnitOfWorkSB.DepartmentRepository.GetDepartmentList(searchTerm);
+
+                return data;
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError($"DepartmentService->GetDepartmentListByPage. Exception Message : {ex.Message}");
+                _logger.LogTrace(ex, ex.Message);
+                throw;
+            }
+
+        }
 
 
         public DotNetRunner AddDepartment(DepartmentDto departmentDto, AppUserLoginInfo appUserLoginInfo)

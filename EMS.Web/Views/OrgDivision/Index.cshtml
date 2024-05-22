@@ -4,7 +4,7 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<h1>Organization Divisions</h1>
+<h2>Organization Divisions</h2>
 
 <form method="get" asp-controller="OrgDivision" asp-action="Index">
     <input type="text" class="mb-2" name="searchTerm" placeholder="Search..." value="@ViewContext.HttpContext.Request.Query["searchTerm"]" />

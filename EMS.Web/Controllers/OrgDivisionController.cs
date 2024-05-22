@@ -23,7 +23,7 @@ namespace EMS.Web.Controllers
         }
 
 
-        [HttpGet("orgDivisionList")]
+        [HttpGet("OrgDivisionList")]
         public IActionResult Index(string searchTerm)
         {
             try
@@ -38,13 +38,13 @@ namespace EMS.Web.Controllers
             }
         }
 
-        [HttpGet("addOrgDivision")]
+        [HttpGet("AddOrgDivision")]
         public IActionResult AddOrgDivision()
         {
             return View();
         }
 
-        [HttpPost("addOrgDivision")]
+        [HttpPost("AddOrgDivision")]
         public IActionResult AddOrgDivision(OrgDivisionDto orgDivisionDto)
         {
             if (ModelState.IsValid)
@@ -76,7 +76,7 @@ namespace EMS.Web.Controllers
 
 
 
-        [HttpGet("updateOrgDivision")]
+        [HttpGet("UpdateOrgDivision")]
         public IActionResult UpdateOrgDivision(int id)
         {
             var division = _orgDivisionService.GetOrgDivisionById(id);
@@ -88,7 +88,7 @@ namespace EMS.Web.Controllers
         }
 
 
-        [HttpPost("updateOrgDivision")]
+        [HttpPost("UpdateOrgDivision")]
         public IActionResult UpdateOrgDivision(OrgDivisionDto orgDivisionDto)
         {
             if (ModelState.IsValid)
@@ -119,7 +119,7 @@ namespace EMS.Web.Controllers
         }
 
 
-        [HttpPost("deleteOrgDivision")]
+        [HttpPost("DeleteOrgDivision")]
         public IActionResult DeleteOrgDivision(int orgDivId)
         {
             // Call the service method

@@ -22,16 +22,24 @@ namespace EMS.Web.Controllers
             _orgDivisionService = orgDivisionService;
         }
 
-        public IActionResult Index()
+        [HttpGet("DepartmentList")]
+        public IActionResult Index(string searchTerm)
         {
-            return View();
+            try
+            {
+                List<DepartmentView> departments = _departmentService.GetDepartmentListByPage(searchTerm);
+                return View(departments);
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError($"Error in {nameof(Index)}: {ex.Message}");
+                return View("Error");
+            }
         }
 
 
 
-
-
-        [HttpGet("addDepartment")]
+        [HttpGet("AddDepartment")]
         public IActionResult AddDepartment()
         {
             try
@@ -56,7 +64,7 @@ namespace EMS.Web.Controllers
             }
         }
 
-        [HttpPost("addDepartment")]
+        [HttpPost("AddDepartment")]
         public IActionResult AddDepartment(DepartmentDto departmentDto)
         {
             try
@@ -73,7 +81,7 @@ namespace EMS.Web.Controllers
                     else if (result.OperationTypeInfoId == (int)OperationTypeInfoEnum.Saved)
                     {
                         TempData["SuccessMessage"] = result.Message;
-                        return RedirectToAction("addDepartment");
+                        return RedirectToAction("Index");
                     }
                     else
                     {
