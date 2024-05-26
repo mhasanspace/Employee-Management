@@ -42,6 +42,17 @@ namespace EMS.Common.EnumUtility
             NotDeleted = 1
         }
 
+        /// <summary>
+        /// This value is mapping value of app_users_groups table. type_name_ntv field is enum string and app_users_groups field is enum value.
+        /// </summary>
+        public enum UserGroupEnum
+        {
+            Admin = 1,
+            Employee = 2,
+            Client = 3
+        }
+
+
 
         /// <summary>
         ///  It is same enum of Vendor.Osrms.Web\ClientApp\src\app\common\static-string-data->enum-collection.ApproveOrRejectEnum
@@ -74,21 +85,7 @@ namespace EMS.Common.EnumUtility
             VendorLogin = 38
         }
 
-        /// <summary>
-        /// This value is mapping value of app_users_groups table. type_name_ntv field is enum string and app_users_groups field is enum value.
-        /// </summary>
-        public enum UserGroupEnum
-        {
-            Admin = 1,
-            FPOC = 5,
-            PolicyManager = 6,
-            LM = 7,
-            OSRUser = 8,
-            Vendor = 10,
-            HOD = 11,
-            LM_FPOC = 12,
-            LM_HOD = 13
-        }
+       
 
         /// <summary>
         /// Same enum at angular - enum-collection.ts
