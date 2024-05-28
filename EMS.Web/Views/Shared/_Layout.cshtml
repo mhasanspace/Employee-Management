@@ -75,12 +75,12 @@
                             <ul>
                                 @if (appUserLogin.UserGroupId == (int)EnumCollection.UserGroupEnum.Admin)
                                 {
-                                    <li><a asp-controller="OrgDivision" asp-action="Index" asp-route-token="@jwtToken">Org Division List</a></li>
-                                    <li><a asp-controller="Department" asp-action="Index" asp-route-token="@jwtToken">Department List</a></li>
+                                    <li><a asp-controller="OrgDivision" asp-action="Index">Org Division List</a></li>
+                                    <li><a asp-controller="Department" asp-action="Index">Department List</a></li>
                                 }
                                 @if (appUserLogin.UserGroupId == (int)EnumCollection.UserGroupEnum.Employee)
                                 {
-                                    <li><a asp-controller="Department" asp-action="Index" asp-route-token="@jwtToken">Department List</a></li>
+                                    <li><a asp-controller="Department" asp-action="Index">Department List</a></li>
                                 }
 
                             </ul>

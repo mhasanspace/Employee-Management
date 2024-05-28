@@ -63,10 +63,10 @@ builder.Services.AddAuthentication(options =>
 // Different AddAuthorization Policy
 builder.Services.AddAuthorization(options =>
 {
-    options.AddPolicy("Company", policy => policy.RequireClaim("UserTypeId", "1"));
-    options.AddPolicy("Admin", policy => policy.RequireClaim("UserGroupId", "1"));
-    options.AddPolicy("Client", policy => policy.RequireClaim("UserTypeId", "2"));
-    options.AddPolicy("Vendor", policy => policy.RequireClaim("UserGroupId", "2"));
+    //options.AddPolicy("Company", policy => policy.RequireClaim("UserTypeId", "1"));
+    options.AddPolicy("Admin", policy => policy.RequireClaim("GroupName", "Admin"));
+    //options.AddPolicy("Client", policy => policy.RequireClaim("UserTypeId", "2"));
+    options.AddPolicy("Employee", policy => policy.RequireClaim("GroupName", "Employee"));
 });
 
 
@@ -85,12 +85,12 @@ if (!app.Environment.IsDevelopment())
 }
 
 app.UseHttpsRedirection();
-app.UseStaticFiles();
-
 app.UseRouting();
-
 app.UseAuthentication();
 app.UseAuthorization();
+
+
+app.UseStaticFiles();
 
 app.UseSession(); // Ensure session is enabled
 

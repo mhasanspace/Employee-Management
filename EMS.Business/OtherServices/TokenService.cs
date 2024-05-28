@@ -32,8 +32,8 @@ namespace EMS.Business.OtherServices
             new Claim(JwtRegisteredClaimNames.Sub, user.UserName),
             new Claim(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString()),
             new Claim("UserId", user.Id.ToString()),
-            new Claim("UserTypeId", user.UserTypeId.ToString() ?? string.Empty),
-            new Claim("UserGroupId", user.UserGroupId.ToString() ?? string.Empty)
+            //new Claim("UserTypeId", user.UserTypeId.ToString() ?? string.Empty),
+            new Claim("GroupName", user.UserGroup.GroupName.ToString() ?? string.Empty)
         };
 
             var token = new JwtSecurityToken(

@@ -5,11 +5,14 @@ using EMS.Domain.DtoModels;
 using EMS.Domain.Models;
 using EMS.Domain.ViewModels;
 using EMS.Utility.Helper;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using static EMS.Common.EnumUtility.EnumCollection;
 
 namespace EMS.Web.Controllers
 {
+    [Authorize]
     public class DepartmentController : Controller
     {
         private readonly DepartmentService _departmentService;
@@ -23,7 +26,9 @@ namespace EMS.Web.Controllers
             _orgDivisionService = orgDivisionService;
         }
 
+
         [HttpGet("DepartmentList")]
+        [Authorize(Policy = "Employee")]
         public IActionResult Index(string searchTerm)
         {
             try

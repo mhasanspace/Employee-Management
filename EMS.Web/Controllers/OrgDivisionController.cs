@@ -5,11 +5,14 @@ using EMS.Common.EnumUtility;
 using EMS.Domain.DtoModels;
 using EMS.Domain.ViewModels;
 using EMS.Utility.Helper;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.IdentityModel.Xml;
 using static EMS.Common.EnumUtility.EnumCollection;
 
 namespace EMS.Web.Controllers
 {
+    [Authorize]
     public class OrgDivisionController : Controller
     {
 
@@ -24,6 +27,7 @@ namespace EMS.Web.Controllers
 
 
         [HttpGet("OrgDivisionList")]
+        [Authorize(Policy = "Admin")]
         public IActionResult Index(string searchTerm)
         {
             try
